@@ -14,7 +14,6 @@ on:
   push:
     tags:
       - '*'
-  push:
     branches:
       - main
       - master
@@ -53,7 +52,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=pr
             type=ref,event=tag
-            type=raw,value=${{ github.event.inputs.tags }},enable=${{ github.event_name == 'workflow_dispatch' }}
+            type=raw,value=${{ github.event.inputs.tags }},enable=${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tags != '' && github.event.inputs.tags != null }}
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker image
